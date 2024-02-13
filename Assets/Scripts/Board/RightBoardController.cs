@@ -8,20 +8,18 @@ public class RightBoardController : MonoBehaviour
     [SerializeField] private float _boardSpeed;
     [SerializeField] private float _borders;
 
-    private float ver;
-
     private void FixedUpdate()
     {
-        ver = Input.GetAxis("VerticalArrows");
+        float ver = Input.GetAxis("VerticalArrows");
         if (((transform.position.y <= _borders && ver >= 0) ||
             (transform.position.y >= -_borders && ver <= 0)) &&
             !BoardPause.IsPaused)
         {
-            Movement();
+            Movement(ver);
         }
     }
-    private void Movement()
+    private void Movement(float axis)
     {
-        transform.position = Vector2.MoveTowards(transform.position, transform.position + Vector3.up * ver, _boardSpeed);
+        transform.position = Vector2.MoveTowards(transform.position, transform.position + Vector3.up * axis, _boardSpeed);
     }
 }

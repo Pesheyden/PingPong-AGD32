@@ -265,7 +265,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _boardSpeed: 0.1
-  _boundaries: 2.25
+  _borders: 2.25
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -500,7 +500,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _boardSpeed: 0.1
-  _boundaries: 2.25
+  _borders: 2.25
 --- !u!1 &1098827134
 GameObject:
   m_ObjectHideFlags: 0
