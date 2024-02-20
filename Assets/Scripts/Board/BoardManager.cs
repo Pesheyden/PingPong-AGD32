@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BoardPause
+public class BoardManager
 {
     public static bool IsPaused;
 }
