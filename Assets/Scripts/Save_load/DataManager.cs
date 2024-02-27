@@ -1,32 +1,24 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 using System.IO;
+using UnityEngine;
 
 public class DataManager
 {
-    private const string dataFilePath = "data.json";
-
-    [System.Serializable]
-    private class DataContainer
-    {
-        public string key;
-        public string data;
-    }
-
+    private const string dataFolder = "Data"; 
     public static void SaveData(string key, string data)
     {
-        string filePath = Path.Combine(Application.persistentDataPath, dataFilePath);
+        string folderPath = Path.Combine(Application.persistentDataPath, dataFolder);
 
+        if (!Directory.Exists(folderPath))
+        {
+            Directory.CreateDirectory(folderPath);
+        }
+        string filePath = Path.Combine(folderPath, key + ".json");
         try
         {
-            DataContainer container = new DataContainer();
-            container.key = key;
-            container.data = data;
-            string jsonData = JsonUtility.ToJson(container);
-
-            File.WriteAllText(filePath, jsonData);
-            Debug.Log("Data saved successfully.");
+            File.WriteAllText(filePath, data);
+            Debug.Log("Data saved successfully: " + filePath);
         }
         catch (System.Exception e)
         {
@@ -35,23 +27,13 @@ public class DataManager
     }
     public static string LoadData(string key)
     {
-        string filePath = Path.Combine(Application.persistentDataPath, dataFilePath);
-
+        string filePath = Path.Combine(Application.persistentDataPath, dataFolder, key + ".json");
         if (File.Exists(filePath))
         {
             try
             {
                 string jsonData = File.ReadAllText(filePath);
-                DataContainer container = JsonUtility.FromJson<DataContainer>(jsonData);
-                if (container != null && container.key == key)
-                {
-                    return container.data;
-                }
-                else
-                {
-                    Debug.LogWarning("Key '" + key + "' not found in data file.");
-                    return null;
-                }
+                return jsonData;
             }
             catch (System.Exception e)
             {
@@ -61,7 +43,7 @@ public class DataManager
         }
         else
         {
-            Debug.LogWarning("Data file not found.");
+            Debug.LogWarning("Data file not found: " + filePath);
             return null;
         }
     }
