@@ -16,6 +16,7 @@ public class PauseScr : MonoBehaviour
     [Header("Paused Objects")]
     [SerializeField] BoardController leftBoard;
     [SerializeField] BoardController rightBoard;
+    [SerializeField] BallController ballController;
     //[SerializeField] ball is gonna be here
 
     bool isPaused = false;
@@ -33,7 +34,7 @@ public class PauseScr : MonoBehaviour
         print(isPaused);
         leftBoard.enabled = isPaused;
         rightBoard.enabled = isPaused;
-        // Ball pause will depend on how its physics work
+        ballController.PauseBallStatusChange(isPaused);
 
         // Require reversed value as "isPaused" ↑↑↑
         isPaused = !isPaused;
