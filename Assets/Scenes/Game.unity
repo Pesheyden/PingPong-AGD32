@@ -391,6 +391,8 @@ MonoBehaviour:
   _healthbar: {fileID: 2030485868}
   _maxHealth: 5
   _playerIndex: 1
+  _damage: 1
+  Lost: 276
 --- !u!61 &462974750
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -621,6 +623,8 @@ MonoBehaviour:
   _healthbar: {fileID: 1747280816}
   _maxHealth: 5
   _playerIndex: 2
+  _damage: 1
+  Lost: 275
 --- !u!1 &822449528
 GameObject:
   m_ObjectHideFlags: 0
