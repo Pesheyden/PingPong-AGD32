@@ -1,7 +1,4 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using Unity.Mathematics;
+using Common;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -9,42 +6,41 @@ public class BoostSpavner : MonoBehaviour
 {
     [SerializeField]
     private GameObject[] _boostsPrafabs;
-    
-    private float _timeSinceLastCall;
         
+    [SerializeField]
+    private float SpawnTimeDelay = 15.0f;
+    
+    public Countdown Countdown;
+    
     private GameObject _boostOnScene;
+
+    private void Awake() //starting countdown (for timer)
+    {
+        Countdown = new Countdown(SpawnTimeDelay);
+    }
+
+    private void Update() //check if boost isn`t on scene & counting time 
+    {
+        if (Countdown.IsPlaying())
+            Countdown.Tick(Time.deltaTime);
+        else
+        {
+            if (_boostOnScene != null) return;
+            
+            SpawnBoost();
+            Countdown.Reset();
+        }
+    }
     
-    private Coroutine _spawnCoroutine;
-
-    private readonly float spawnTimeDelay = 10f;  
-
-
-    private void Start()
+    private void SpawnBoost() // spawn random boost on scene
     {
-        _spawnCoroutine = StartCoroutine(SpawnDelay());
-    }
+        int randomIndex = Random.Range(0, _boostsPrafabs.Length);
 
-    private IEnumerator SpawnDelay()
-    {
-        while (true)
-        {
-            yield return new WaitForSeconds(1f);
+        float x = Random.Range(-4, 4);
+        float y = Random.Range(-3, 4);
 
-            if (_boostOnScene == null)
-            {
-                _spawnCoroutine = StartCoroutine(SpawnBoost());
-            }
-        }
-    }
-
-    private IEnumerator SpawnBoost()
-    {
-        int index = Random.Range(0, _boostsPrafabs.Length);
-        _boostOnScene = Instantiate(_boostsPrafabs[index], new Vector2(Random.Range(-4, 4), Random.Range(-3, 4)), quaternion.identity);
+        Vector2 spawnPosition = new Vector2(x, y);
         
-        while (_boostOnScene != null)
-        {
-            yield return null;
-        }
+        _boostOnScene = Instantiate(_boostsPrafabs[randomIndex], spawnPosition, Quaternion.identity);
     }
 }
