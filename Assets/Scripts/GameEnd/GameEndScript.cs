@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameEndScript : MonoBehaviour
+public class GameOverHandler : MonoBehaviour
 {
     public GameObject winPanelLeft;
     public GameObject winPanelRight;
@@ -36,6 +36,11 @@ public class GameEndScript : MonoBehaviour
             PlayerPrefs.SetFloat(recordKey, currentTime);
             PlayerPrefs.Save();
             recordBeaten = true;
+        }
+        if (recordBeaten)
+        {
+            string jsonData = JsonUtility.ToJson(currentTime);
+            DataManager.SaveData(recordKey, jsonData);
         }
     }
 }
