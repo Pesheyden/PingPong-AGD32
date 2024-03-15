@@ -392,7 +392,6 @@ MonoBehaviour:
   _maxHealth: 5
   _playerIndex: 1
   _damage: 1
-  Lost: 276
 --- !u!61 &462974750
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -623,6 +622,7 @@ MonoBehaviour:
   _healthbar: {fileID: 1747280816}
   _maxHealth: 5
   _playerIndex: 2
+  _damage: 0
 --- !u!1 &822449528
 GameObject:
   m_ObjectHideFlags: 0
@@ -777,6 +777,7 @@ GameObject:
   m_Component:
   - component: {fileID: 882425292}
   - component: {fileID: 882425291}
+  - component: {fileID: 882425293}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -819,6 +820,26 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &882425293
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 882425290}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a05474e7081d47588a3db315781e9092, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  BoostEffectLength: 10
+  PlatformSizeUp: {x: 0.5, y: 2.8, z: 1}
+  PlatformSizeDown: {x: 0.5, y: 1.2, z: 1}
+  BallSizeUp: {x: 1.5, y: 1.5, z: 1.5}
+  BallSizeDown: {x: 0.5, y: 0.5, z: 0.5}
+  BallSpeedUp: 10
+  BasePlatformSize: {x: 0, y: 0, z: 0}
+  BaseBallSize: {x: 0, y: 0, z: 0}
 --- !u!1 &1003605501
 GameObject:
   m_ObjectHideFlags: 0
@@ -1117,14 +1138,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 42d1fd880f1efa640a93cf825febda9a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _boostSpavner: {fileID: 882425291}
+  _boostSpawner: {fileID: 882425291}
   _ballController: {fileID: 1098827139}
+  _boostsStats: {fileID: 882425293}
   _rightPlatform: {fileID: 822449528}
   _leftPlatform: {fileID: 115864339}
   _rightSlider: {fileID: 1747280816}
   _leftSlider: {fileID: 2030485868}
   _ball: {fileID: 1098827134}
-  _boostEffectLength: 10
 --- !u!50 &1098827142
 Rigidbody2D:
   serializedVersion: 4

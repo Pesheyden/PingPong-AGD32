@@ -1,15 +1,20 @@
 using System;
+using Boosts;
 using Common;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class BoostManager : MonoBehaviour
 {
-    [SerializeField] 
-    private BoostSpavner _boostSpavner;
+    [FormerlySerializedAs("_boostSpavner")] [SerializeField] 
+    private BoostSpawner _boostSpawner;
     
     [SerializeField]
     private BallController _ballController;
+
+    [SerializeField]
+    private BoostsStats _boostsStats;
 
     [SerializeField] 
     private GameObject _rightPlatform;
@@ -25,9 +30,6 @@ public class BoostManager : MonoBehaviour
         
     [SerializeField] 
     private GameObject _ball;
-
-    [SerializeField]
-    private float _boostEffectLength = 10f;
     
     private GameObject _currentPlatform;
 
@@ -45,8 +47,14 @@ public class BoostManager : MonoBehaviour
     
     private void Awake()
     {
-        _countdown = new Countdown(_boostEffectLength);
+        _countdown = new Countdown(_boostsStats.BoostEffectLength);
         
+        _boostsStats.BasePlatformSize = _leftPlatform.transform.localScale;
+        _boostsStats.BaseBallSize = transform.localScale;
+    }
+
+    private void Start()
+    {
         _speedBoostUsed = false;
         _platformSizeBoostUsed = false;
         _ballSizeBoostUsed = false;
@@ -85,48 +93,48 @@ public class BoostManager : MonoBehaviour
         if (other.gameObject.tag == "PlatformSizeUp")
         {
             _platformWithBoost = _currentPlatform;
-            _currentPlatform.transform.localScale = new Vector3(0.5f, 2.8f, 1);
+            _currentPlatform.transform.localScale = _boostsStats.PlatformSizeUp;
             _platformSizeBoostUsed = true;
             Destroy(other.gameObject);
             _countdown.Reset();
-            _boostSpavner.Countdown.Reset();
+            _boostSpawner.Countdown.Reset();
         }
 
         if (other.gameObject.tag == "PlatformSizeDown")
         {
             _platformWithBoost = _currentPlatform;
-            _currentPlatform.transform.localScale = new Vector3(0.5f, 1.2f, 1);
+            _currentPlatform.transform.localScale = _boostsStats.PlatformSizeDown;
             _platformSizeBoostUsed = true;
             Destroy(other.gameObject);
             _countdown.Reset();
-            _boostSpavner.Countdown.Reset();
+            _boostSpawner.Countdown.Reset();    
         }
 
         if (other.gameObject.tag == "BallSpeedUp")
         {
-            _ballController.BaseSpeed += 10;
+            _ballController.BaseSpeed += _boostsStats.BallSpeedUp;
             _speedBoostUsed = true;
             Destroy(other.gameObject);
             _countdown.Reset();
-            _boostSpavner.Countdown.Reset();
+            _boostSpawner.Countdown.Reset();
         }
 
         if (other.gameObject.tag == "BallSizeUp")
         {
-            _ball.transform.localScale = new Vector3(1.5f, 1.5f, 1.5f);
+            _ball.transform.localScale = _boostsStats.BallSizeUp;
             _ballSizeBoostUsed = true;
             Destroy(other.gameObject);
             _countdown.Reset();
-            _boostSpavner.Countdown.Reset();
+            _boostSpawner.Countdown.Reset();
         }
         
         if (other.gameObject.tag == "BallSizeDown")
         {
-            _ball.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
+            _ball.transform.localScale = _boostsStats.BallSizeDown;
             _ballSizeBoostUsed = true;
             Destroy(other.gameObject);
             _countdown.Reset();
-            _boostSpavner.Countdown.Reset();
+            _boostSpawner.Countdown.Reset();
         }
 
         if (other.gameObject.tag == "Health")
@@ -134,7 +142,7 @@ public class BoostManager : MonoBehaviour
             _currentSlider.value++;
             Destroy(other.gameObject);
             _countdown.Reset();
-            _boostSpavner.Countdown.Reset();
+            _boostSpawner.Countdown.Reset();
         }
     }
 
@@ -142,14 +150,14 @@ public class BoostManager : MonoBehaviour
     {
         if (_platformSizeBoostUsed == true && _platformWithBoost != null)
         {
-            _platformWithBoost.transform.localScale = new Vector3(0.5f, 2f, 1);
+            _platformWithBoost.transform.localScale = _boostsStats.BasePlatformSize;
             _countdown.Reset();
             _platformSizeBoostUsed = false;
         }
 
         if (_ballSizeBoostUsed == true)
         {
-            _ball.transform.localScale = new Vector3(1f, 1f, 1f);
+            _ball.transform.localScale = _boostsStats.BaseBallSize;
             _countdown.Reset();
             _ballSizeBoostUsed = false;
         }
