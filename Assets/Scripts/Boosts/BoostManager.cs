@@ -16,6 +16,9 @@ public class BoostManager : MonoBehaviour
     [SerializeField]
     private BoostsStats _boostsStats;
 
+    [SerializeField]
+    private BallMovementHandler _ballMovementHandler;
+
     [SerializeField] 
     private GameObject _rightPlatform;
     
@@ -30,6 +33,11 @@ public class BoostManager : MonoBehaviour
         
     [SerializeField] 
     private GameObject _ball;
+    
+    [SerializeField]
+    private Rigidbody2D _ballRigidbody;
+
+    private Vector2 _speedWithBoost;
     
     private GameObject _currentPlatform;
 
@@ -62,6 +70,8 @@ public class BoostManager : MonoBehaviour
 
     private void Update()
     {
+        _speedWithBoost = _ballRigidbody.velocity + new Vector2(3, 3);
+        
         if (_countdown.IsPlaying())
             _countdown.Tick(Time.deltaTime);
 
@@ -69,8 +79,6 @@ public class BoostManager : MonoBehaviour
         {
             ResetValues();
         }
-        
-        Debug.Log(_platformWithBoost);
     }
 
     private void OnCollisionEnter2D(Collision2D other) // checking from which platform ball bounced
@@ -87,63 +95,45 @@ public class BoostManager : MonoBehaviour
             _currentSlider = _leftSlider;
         }
     }
-
-    private void OnTriggerEnter2D(Collider2D other) // giving boost for smth
+    
+    private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.tag == "PlatformSizeUp")
+        switch (other.gameObject.tag)
         {
-            _platformWithBoost = _currentPlatform;
-            _currentPlatform.transform.localScale = _boostsStats.PlatformSizeUp;
-            _platformSizeBoostUsed = true;
-            Destroy(other.gameObject);
-            _countdown.Reset();
-            _boostSpawner.Countdown.Reset();
+            case "PlatformSizeUp":
+                _platformWithBoost = _currentPlatform;
+                _currentPlatform.transform.localScale = _boostsStats.PlatformSizeUp;
+                _platformSizeBoostUsed = true;
+                break;
+
+            case "PlatformSizeDown":
+                _platformWithBoost = _currentPlatform;
+                _currentPlatform.transform.localScale = _boostsStats.PlatformSizeDown;
+                _platformSizeBoostUsed = true;
+                break;
+
+            case "BallSpeedUp":
+                _ballMovementHandler.SetBallSpeed(_speedWithBoost);
+                break;
+
+            case "BallSizeUp":
+                _ball.transform.localScale = _boostsStats.BallSizeUp;
+                _ballSizeBoostUsed = true;
+                break;
+
+            case "BallSizeDown":
+                _ball.transform.localScale = _boostsStats.BallSizeDown;
+                _ballSizeBoostUsed = true;
+                break;
+
+            case "Health":
+                _currentSlider.value++;
+                break;
         }
 
-        if (other.gameObject.tag == "PlatformSizeDown")
-        {
-            _platformWithBoost = _currentPlatform;
-            _currentPlatform.transform.localScale = _boostsStats.PlatformSizeDown;
-            _platformSizeBoostUsed = true;
-            Destroy(other.gameObject);
-            _countdown.Reset();
-            _boostSpawner.Countdown.Reset();    
-        }
-
-        if (other.gameObject.tag == "BallSpeedUp")
-        {
-            _ballController.BaseSpeed += _boostsStats.BallSpeedUp;
-            _speedBoostUsed = true;
-            Destroy(other.gameObject);
-            _countdown.Reset();
-            _boostSpawner.Countdown.Reset();
-        }
-
-        if (other.gameObject.tag == "BallSizeUp")
-        {
-            _ball.transform.localScale = _boostsStats.BallSizeUp;
-            _ballSizeBoostUsed = true;
-            Destroy(other.gameObject);
-            _countdown.Reset();
-            _boostSpawner.Countdown.Reset();
-        }
-        
-        if (other.gameObject.tag == "BallSizeDown")
-        {
-            _ball.transform.localScale = _boostsStats.BallSizeDown;
-            _ballSizeBoostUsed = true;
-            Destroy(other.gameObject);
-            _countdown.Reset();
-            _boostSpawner.Countdown.Reset();
-        }
-
-        if (other.gameObject.tag == "Health")
-        {
-            _currentSlider.value++;
-            Destroy(other.gameObject);
-            _countdown.Reset();
-            _boostSpawner.Countdown.Reset();
-        }
+        Destroy(other.gameObject);
+        _countdown.Reset();
+        _boostSpawner.Countdown.Reset();
     }
 
     private void ResetValues()

@@ -8,17 +8,17 @@ public class BoostSpawner : MonoBehaviour
     private GameObject[] _boostsPrafabs;
         
     [SerializeField]
-    private float SpawnTimeDelay = 15.0f;
+    private float SpawnTimeDelay = 1f;
     
     public Countdown Countdown;
     
     private GameObject _boostOnScene;
 
-    private float _xx = -4f;
-    private float _xy = 4f;
+    private float _xx = -3f;
+    private float _xy = 3f;
 
     private float _yx = -3f;
-    private float _yy = 4f;
+    private float _yy = 3f;
 
     private void Awake() //starting countdown (for timer)
     {
