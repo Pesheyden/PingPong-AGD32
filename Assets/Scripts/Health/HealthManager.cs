@@ -7,13 +7,21 @@ using UnityEngine.UI;
 public class HealthManager : MonoBehaviour
 {
     [SerializeField] private Slider _healthbar;
-    [SerializeField] private float _maxHealth;
+    [SerializeField] private int _maxHealth;
     [SerializeField] private int _playerIndex;
-    //[SerializeField] private KeyCode Lost;    Для перевірки
+    [SerializeField] private int _damage;
+    //[SerializeField] private KeyCode Lost;   Для перевірки
     public static int Loser;
 
-    public static event Action GameOver;
+    public delegate void GameOverDelegate(PlayerEnum c);
+
+    public static event GameOverDelegate GameOver;
     
+    public enum PlayerEnum
+    {
+        left = 1,
+        right = 2
+    }
 
     void Awake()
     {
@@ -28,23 +36,18 @@ public class HealthManager : MonoBehaviour
         //if (Input.GetKeyDown(Lost))    Для перевірки
         {
             Loser = _playerIndex;
-            GameOver?.Invoke();
+            GameOver?.Invoke((PlayerEnum)_playerIndex);
         }
     }
 
     private void OnTriggerEnter2D(Collider2D collider)
     {
-        DamageTaken();
+        ChangeHealth(-_damage);
     }
 
-    private void DamageTaken()
+    public void GameEnded(PlayerEnum lost)   //  Для перевірки
     {
-        _healthbar.value --; 
-    }
-
-    public void GameEnded() //    Для перевірки
-    {
-        Debug.Log("Player " + Loser + " has lost");
+        Debug.Log("Player " + lost + " has lost");
     }
 
     public void ChangeHealth(int health)
