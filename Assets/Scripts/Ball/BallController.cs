@@ -3,6 +3,9 @@ using UnityEngine;
 
 public class BallController : MonoBehaviour
 {
+    private static BallController instance;
+    public static BallController Instance { get { return instance; } }
+
     [Header("Movement")]
     public float BaseSpeed;
     public float Acceleration;
@@ -30,12 +33,42 @@ public class BallController : MonoBehaviour
     private bool _isBallInGame;
     private BallMovementHandler _movementHandler;
 
-
+    private void Awake()
+    {
+        instance = this;
+    }
     private void Start()
     {
         _movementHandler = GetComponent<BallMovementHandler>();
     }
 
+    public void ImplementSettings(GameDifficulty gameDifficulty)
+    {
+        switch (gameDifficulty)
+        {
+            case GameDifficulty.Easy:
+                DifficultyStats.EasyDifficulty easyDifficultyStats = new();
+                transform.localScale *= easyDifficultyStats.BallSizeMultiplier;
+                BaseSpeed *= easyDifficultyStats.BallStartSpeedMultiplier;
+                Acceleration *= easyDifficultyStats.BallAccelerationMultiplier;
+                break;
+
+            case GameDifficulty.Medium:
+                DifficultyStats.MediumDifficulty mediumDifficultyStats = new();
+                transform.localScale *= mediumDifficultyStats.BallSizeMultiplier;
+                BaseSpeed *= mediumDifficultyStats.BallStartSpeedMultiplier;
+                Acceleration *= mediumDifficultyStats.BallAccelerationMultiplier;
+                break;
+
+            case GameDifficulty.Hard:
+                DifficultyStats.HardDifficulty hardDifficultyStats = new();
+                transform.localScale *= hardDifficultyStats.BallSizeMultiplier;
+                BaseSpeed *= hardDifficultyStats.BallStartSpeedMultiplier;
+                Acceleration *= hardDifficultyStats.BallAccelerationMultiplier;
+                break;
+
+        }
+    }
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Space) && !_isBallInGame)
