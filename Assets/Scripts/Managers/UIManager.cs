@@ -9,6 +9,8 @@ public class UIManager : MonoBehaviour
     private static UIManager instance;
     public static UIManager Instance { get { return instance; } }
 
+
+
     
     private void Awake()
     {
@@ -21,8 +23,8 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    public void ChangeDifficultyText(string text)
+    public void ChangeDifficultyText(string text, Color color)
     {
-        UIMainMenuRedirect.Instance.ChangeDifficultyText(text);
+        UIMainMenuRedirect.Instance.ChangeDifficultyText(text, color);
     }
 }

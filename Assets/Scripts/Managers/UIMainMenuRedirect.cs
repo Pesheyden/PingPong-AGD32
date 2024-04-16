@@ -33,8 +33,9 @@ public class UIMainMenuRedirect : MonoBehaviour
     {
         _gameManager.ChangeDifficulty(difficulty);
     }
-    public void ChangeDifficultyText(string text)
+    public void ChangeDifficultyText(string text, Color color)
     {
         _difficultyText.text = text;
+        _difficultyText.color = color;
     }
 }
