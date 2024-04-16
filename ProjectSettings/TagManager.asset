@@ -3,7 +3,15 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - BallSizeUp
+  - BallSizeDown
+  - PlatformSizeUp
+  - PlatformSizeDown
+  - BallSpeedUp
+  - Health
+  - RightPlatform
+  - LeftPlatform
   layers:
   - Default
   - TransparentFX
