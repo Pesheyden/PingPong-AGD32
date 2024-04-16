@@ -51,9 +51,7 @@ public class GameManager : MonoBehaviour
     }
     public void ChangeDifficulty(GameDifficulty difficulty)
     {
-        Debug.Log(1);
         if(difficulty == _gameDifficulty) return;
-        Debug.Log(2);
         _gameDifficulty = difficulty;
         Color color = Color.white;
         switch (difficulty)

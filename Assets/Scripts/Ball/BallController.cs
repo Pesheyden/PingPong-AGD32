@@ -36,6 +36,7 @@ public class BallController : MonoBehaviour
     private void Awake()
     {
         instance = this;
+        _isBallInGame = false;
     }
     private void Start()
     {
