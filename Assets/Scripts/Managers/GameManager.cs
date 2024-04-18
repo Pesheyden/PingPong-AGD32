@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,14 +9,20 @@ public class GameManager : MonoBehaviour
     private static GameManager instance;
     public static GameManager Instance { get { return instance; } }
 
+
+
     private UIManager _uiManager;
     private BallController _ballController;
 
+
     private GameRedirect _gameRedirect;
-    private GameDifficulty _gameDifficulty = GameDifficulty.Hard;
+    private GameDifficulty _gameDifficulty = GameDifficulty.Easy;
     [SerializeField] private Color _easyTextColor = Color.green;
     [SerializeField] private Color _mediumTextColor = Color.yellow;
     [SerializeField] private Color _hardTextColor = Color.red;
+
+
+    public Timer Timer = new Timer();
 
     private void Awake()
     {
@@ -45,13 +52,12 @@ public class GameManager : MonoBehaviour
             case "Game":
                 _gameRedirect = FindObjectOfType<GameRedirect>();
                 _ballController = _gameRedirect.BallController;
-                StartSettingsImplementation();
+                StartCoroutine(GameStartWaiter());
                 break;
         }
     }
     public void ChangeDifficulty(GameDifficulty difficulty)
     {
-        if(difficulty == _gameDifficulty) return;
         _gameDifficulty = difficulty;
         Color color = Color.white;
         switch (difficulty)
@@ -63,22 +69,59 @@ public class GameManager : MonoBehaviour
         }
         _uiManager.ChangeDifficultyText(difficulty.ToString(), color);
     }
-    public void RespawnBall()
+    public void RestartScene()
+    {
+        LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+    public void LoadNextScene()
+    {
+        int index = SceneManager.GetActiveScene().buildIndex + 1;
+        LoadScene(index);
+    }
+    public void LoadScene(int index)
+    {
+        SceneManager.LoadScene(index);
+    }
+    private IEnumerator GameStartWaiter()
+    {
+        yield return new WaitUntil(() => Input.GetKeyDown(KeyCode.Space));
+        StartGame();
+    }
+    private void StartGame()
     {
         _ballController.SpawnBall();
+        StartSettingsImplementation();
+        Timer.StartTimer(GameTimerUpdate);
+    }
+    public void GameTimerUpdate(string time, string formattedTime)
+    {
+        UIManager.Instance.UpdateTimerText(formattedTime);
+    }
+    public void PauseTimer()
+    {
+        Timer.PauseTimer();
+    }
+    public void UnPauseTimer()
+    {
+        Timer.StartTimer(GameTimerUpdate);
     }
     private void StartSettingsImplementation()
     {
         _gameRedirect.ImplementSettings(_gameDifficulty);
     }
-    private void LoadScene(int index)
+    public void RespawnBall()
     {
-        SceneManager.LoadScene(index);
+        _ballController.SpawnBall();
+    }
+    public void StopGameTimer()
+    {
+        Timer.StopTimer();
     }
 }
+[Serializable]
 public enum GameDifficulty
 {
-    Easy,
-    Medium,
-    Hard,
+    Easy = 0,
+    Medium = 1,
+    Hard = 2,
 }

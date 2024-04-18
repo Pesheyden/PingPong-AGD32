@@ -5,8 +5,20 @@ using UnityEngine;
 
 public class DataManager
 {
-    private const string dataFolder = "Data"; 
-    public static void SaveData(string key, string data)
+    private const string dataFolder = "Data";
+    private static DataManager instance;
+    public static DataManager Instance 
+    {
+        get 
+        {
+            if (instance == null)
+            {
+                instance = new DataManager();
+            }
+            return instance; 
+        } 
+    }
+    public void SaveData(string key, string data)
     {
         string folderPath = Path.Combine(Application.persistentDataPath, dataFolder);
 
@@ -25,7 +37,7 @@ public class DataManager
             Debug.LogError("Failed to save data: " + e.Message);
         }
     }
-    public static string LoadData(string key)
+    public string LoadData(string key)
     {
         string filePath = Path.Combine(Application.persistentDataPath, dataFolder, key + ".json");
         if (File.Exists(filePath))

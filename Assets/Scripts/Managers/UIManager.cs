@@ -27,4 +27,8 @@ public class UIManager : MonoBehaviour
     {
         UIMainMenuRedirect.Instance.ChangeDifficultyText(text, color);
     }
+    public void UpdateTimerText(string text)
+    {
+        UIGameRedirect.Instance.UpdateTimerText(text);
+    }
 }

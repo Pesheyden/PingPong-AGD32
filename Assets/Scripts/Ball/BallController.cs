@@ -9,15 +9,14 @@ public class BallController : MonoBehaviour
     [Header("Movement")]
     public float BaseSpeed;
     public float Acceleration;
+    [SerializeField] private float _maxMovementDistance;
     public enum Side { Left, Right };
+
     public Side BounceSide;
 
     [Header("Spawn")]
     [SerializeField] private Vector3 _spawnPosition;
     [SerializeField] private float _spawnMovementDelay;
-
-    [SerializeField] float excludeAngle = 45;
-    [SerializeField] float excludeAngleThrough = 135;
 
     [SerializeField] float firstRegionMinAngle = 0; 
     [SerializeField] float firstRegionMaxAngle = 45;
@@ -72,9 +71,9 @@ public class BallController : MonoBehaviour
     }
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && !_isBallInGame)
+        if (Vector2.Distance(Vector2.zero, transform.position) > _maxMovementDistance)
         {
-            SpawnBall();
+            GameManager.Instance.RespawnBall();
         }
     }
     public void PauseBallStatusChange(bool value)
@@ -126,15 +125,5 @@ public class BallController : MonoBehaviour
     {
         yield return new WaitForSeconds(_spawnMovementDelay);
         StartBallMovement();
-    }
-
-    public void SetPreviousBounceSide(Side side)
-    {
-        BounceSide = side;
-    }
-
-    public void BallBounceHandler(Side side)
-    {
-        SetPreviousBounceSide(side);
     }
 }

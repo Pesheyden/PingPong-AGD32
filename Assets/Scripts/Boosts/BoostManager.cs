@@ -28,8 +28,8 @@ public class BoostManager : MonoBehaviour
     [SerializeField] 
     private Slider _rightSlider;
     
-     [SerializeField] 
-     private Slider _leftSlider;
+    [SerializeField] 
+    private Slider _leftSlider;
         
     [SerializeField] 
     private GameObject _ball;
@@ -52,13 +52,17 @@ public class BoostManager : MonoBehaviour
     private bool _platformSizeBoostUsed;
     
     private bool _ballSizeBoostUsed;
+
+    private Vector3 _platformBaseSize;
+
+    private Vector3 _ballBaseSize;
     
     private void Awake()
     {
         _countdown = new Countdown(_boostsStats.BoostEffectLength);
-        
-        _boostsStats.BasePlatformSize = _leftPlatform.transform.localScale;
-        _boostsStats.BaseBallSize = transform.localScale;
+
+        _platformBaseSize = _leftPlatform.transform.localScale;
+        _ballBaseSize = transform.localScale;
     }
 
     private void Start()
@@ -82,7 +86,7 @@ public class BoostManager : MonoBehaviour
     }
 
     private void OnCollisionEnter2D(Collision2D other) // checking from which platform ball bounced
-    {
+    { 
         if (other.gameObject.tag == "RightPlatform")
         {
             _currentPlatform = _rightPlatform;
@@ -102,13 +106,13 @@ public class BoostManager : MonoBehaviour
         {
             case "PlatformSizeUp":
                 _platformWithBoost = _currentPlatform;
-                _currentPlatform.transform.localScale = _boostsStats.PlatformSizeUp;
+                _currentPlatform.transform.localScale *= _boostsStats.PlatformSizeUp;
                 _platformSizeBoostUsed = true;
                 break;
 
             case "PlatformSizeDown":
                 _platformWithBoost = _currentPlatform;
-                _currentPlatform.transform.localScale = _boostsStats.PlatformSizeDown;
+                _currentPlatform.transform.localScale *= _boostsStats.PlatformSizeDown;
                 _platformSizeBoostUsed = true;
                 break;
 
@@ -117,12 +121,12 @@ public class BoostManager : MonoBehaviour
                 break;
 
             case "BallSizeUp":
-                _ball.transform.localScale = _boostsStats.BallSizeUp;
+                _ball.transform.localScale *= _boostsStats.BallSizeUp;
                 _ballSizeBoostUsed = true;
                 break;
 
             case "BallSizeDown":
-                _ball.transform.localScale = _boostsStats.BallSizeDown;
+                _ball.transform.localScale *= _boostsStats.BallSizeDown;
                 _ballSizeBoostUsed = true;
                 break;
 
@@ -140,14 +144,14 @@ public class BoostManager : MonoBehaviour
     {
         if (_platformSizeBoostUsed == true && _platformWithBoost != null)
         {
-            _platformWithBoost.transform.localScale = _boostsStats.BasePlatformSize;
+            _platformWithBoost.transform.localScale = _platformBaseSize;
             _countdown.Reset();
             _platformSizeBoostUsed = false;
         }
 
         if (_ballSizeBoostUsed == true)
         {
-            _ball.transform.localScale = _boostsStats.BaseBallSize;
+            _ball.transform.localScale = _ballBaseSize;
             _countdown.Reset();
             _ballSizeBoostUsed = false;
         }
