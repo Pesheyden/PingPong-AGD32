@@ -12,6 +12,7 @@ public class UIGameRedirect : MonoBehaviour
 
 
     [SerializeField] private TextMeshProUGUI _timerText;
+    [SerializeField] private GameObject _gameStartUI;
 
     private void Awake()
     {
@@ -21,5 +22,9 @@ public class UIGameRedirect : MonoBehaviour
     public void UpdateTimerText(string text)
     {
         _timerText.text = text;
+    }
+    public void DisableGameStartUI()
+    {
+        _gameStartUI.SetActive(false);
     }
 }

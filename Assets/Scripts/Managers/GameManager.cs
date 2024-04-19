@@ -89,6 +89,7 @@ public class GameManager : MonoBehaviour
     }
     private void StartGame()
     {
+        _uiManager.DisableGameStartUI();
         _ballController.SpawnBall();
         StartSettingsImplementation();
         Timer.StartTimer(GameTimerUpdate);
@@ -116,6 +117,10 @@ public class GameManager : MonoBehaviour
     public void StopGameTimer()
     {
         Timer.StopTimer();
+    }
+    public void ExitGame()
+    {
+        Application.Quit();
     }
 }
 [Serializable]

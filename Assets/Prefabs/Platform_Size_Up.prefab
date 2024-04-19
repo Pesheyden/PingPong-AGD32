@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6778061488361602440}
   - component: {fileID: 1990174736762544889}
   - component: {fileID: 1202056257851007146}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Platform_Size_Up
   m_TagString: PlatformSizeUp
   m_Icon: {fileID: 0}

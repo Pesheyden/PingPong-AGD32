@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2602392938287087645}
   - component: {fileID: 4957127288253533177}
   - component: {fileID: 2086832141025889635}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Ball_Size_Down
   m_TagString: BallSizeDown
   m_Icon: {fileID: 0}

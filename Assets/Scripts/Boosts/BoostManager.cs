@@ -60,16 +60,14 @@ public class BoostManager : MonoBehaviour
     private void Awake()
     {
         _countdown = new Countdown(_boostsStats.BoostEffectLength);
-
-        _platformBaseSize = _leftPlatform.transform.localScale;
-        _ballBaseSize = transform.localScale;
-    }
-
-    private void Start()
-    {
         _speedBoostUsed = false;
         _platformSizeBoostUsed = false;
         _ballSizeBoostUsed = false;
+    }
+    public void SettingsImplementation()
+    {
+        _platformBaseSize = _leftPlatform.transform.localScale;
+        _ballBaseSize = transform.localScale;
     }
 
     private void Update()
@@ -108,36 +106,52 @@ public class BoostManager : MonoBehaviour
                 _platformWithBoost = _currentPlatform;
                 _currentPlatform.transform.localScale *= _boostsStats.PlatformSizeUp;
                 _platformSizeBoostUsed = true;
+                Destroy(other.gameObject);
+                _countdown.Reset();
+                _boostSpawner.Countdown.Reset();
                 break;
 
             case "PlatformSizeDown":
                 _platformWithBoost = _currentPlatform;
                 _currentPlatform.transform.localScale *= _boostsStats.PlatformSizeDown;
                 _platformSizeBoostUsed = true;
+                Destroy(other.gameObject);
+                _countdown.Reset();
+                _boostSpawner.Countdown.Reset();
                 break;
 
             case "BallSpeedUp":
                 _ballMovementHandler.SetBallSpeed(_speedWithBoost);
+                Destroy(other.gameObject);
+                _countdown.Reset();
+                _boostSpawner.Countdown.Reset();
                 break;
 
             case "BallSizeUp":
                 _ball.transform.localScale *= _boostsStats.BallSizeUp;
                 _ballSizeBoostUsed = true;
+                Destroy(other.gameObject);
+                _countdown.Reset();
+                _boostSpawner.Countdown.Reset();
                 break;
 
             case "BallSizeDown":
                 _ball.transform.localScale *= _boostsStats.BallSizeDown;
                 _ballSizeBoostUsed = true;
+                Destroy(other.gameObject);
+                _countdown.Reset();
+                _boostSpawner.Countdown.Reset();
                 break;
 
             case "Health":
                 _currentSlider.value++;
+                Destroy(other.gameObject);
+                _countdown.Reset();
+                _boostSpawner.Countdown.Reset();
                 break;
         }
 
-        Destroy(other.gameObject);
-        _countdown.Reset();
-        _boostSpawner.Countdown.Reset();
+
     }
 
     private void ResetValues()

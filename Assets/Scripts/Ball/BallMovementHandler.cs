@@ -19,6 +19,7 @@ public class BallMovementHandler : MonoBehaviour
         if (!_isBlocked)
         {
             _currentSpeed = _rigidbody.velocity * (1 + _ballController.Acceleration * Time.deltaTime);
+            if (_currentSpeed.magnitude < _ballController.BaseSpeed) _currentSpeed *= _ballController.BaseSpeed / 2;
             _rigidbody.velocity = _currentSpeed;
         }
     }

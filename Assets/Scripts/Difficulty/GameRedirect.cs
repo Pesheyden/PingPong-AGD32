@@ -5,7 +5,8 @@ using UnityEngine;
 public class GameRedirect : MonoBehaviour
 {
     public BallController BallController;
-    public BoardController[] _boardControllers;
+    [SerializeField] private BoardController[] _boardControllers;
+    [SerializeField] private BoostManager _boostManager;
     public void ImplementSettings(GameDifficulty gameDifficulty)
     {
         BallController.ImplementSettings(gameDifficulty);
@@ -13,5 +14,6 @@ public class GameRedirect : MonoBehaviour
         { 
             boardController.ImplementSettings(gameDifficulty);
         }
+        _boostManager.SettingsImplementation();
     }
 }

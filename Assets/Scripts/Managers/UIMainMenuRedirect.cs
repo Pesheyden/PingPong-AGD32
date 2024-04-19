@@ -29,4 +29,8 @@ public class UIMainMenuRedirect : MonoBehaviour
         _difficultyText.text = text;
         _difficultyText.color = color;
     }
+    public void ExitGame()
+    {
+        GameManager.Instance.ExitGame();
+    }
 }

@@ -31,4 +31,8 @@ public class UIManager : MonoBehaviour
     {
         UIGameRedirect.Instance.UpdateTimerText(text);
     }
+    public void DisableGameStartUI()
+    {
+        UIGameRedirect.Instance.DisableGameStartUI();
+    }
 }

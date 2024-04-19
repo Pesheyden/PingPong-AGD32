@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8165870405891466480}
   - component: {fileID: 7197247751390832395}
   - component: {fileID: 4733476608455030088}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Ball_Speed_Up
   m_TagString: BallSpeedUp
   m_Icon: {fileID: 0}
