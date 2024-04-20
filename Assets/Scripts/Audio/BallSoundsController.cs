@@ -36,6 +36,21 @@ public class BallSoundsController : MonoBehaviour
         }
     }
 
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        int collisionLayer = collision.gameObject.layer;
+        string layerName = LayerMask.LayerToName(collisionLayer);
+
+        switch (layerName)
+        {
+            case "Boost":
+                PlaySound(boostPickupSound);
+                break;
+            default:
+                break;
+        }
+    }
+
     private void PlaySound(AudioClip sound)
     {
         if (sound != null && audioSource != null)

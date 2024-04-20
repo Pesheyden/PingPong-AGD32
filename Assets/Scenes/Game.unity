@@ -2320,7 +2320,7 @@ GameObject:
   - component: {fileID: 888309014}
   - component: {fileID: 888309015}
   - component: {fileID: 888309016}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: outer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3244,7 +3244,7 @@ MonoBehaviour:
   _boardControllers:
   - {fileID: 115864343}
   - {fileID: 822449532}
-  _boostManager: {fileID: 1098827143}
+  _boostManager: {fileID: 0}
 --- !u!114 &1075913839
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3553,7 +3553,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.1
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -5082,7 +5082,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: ddbc878d0fc9cb74b8aee819c45a02b5, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.1
+  m_Volume: 0.3
   m_Pitch: 1
   Loop: 0
   Mute: 0
