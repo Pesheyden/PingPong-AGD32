@@ -1682,6 +1682,7 @@ GameObject:
   - component: {fileID: 595534417}
   - component: {fileID: 595534415}
   - component: {fileID: 595534414}
+  - component: {fileID: 595534418}
   m_Layer: 0
   m_Name: Spawner
   m_TagString: Untagged
@@ -1742,6 +1743,28 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &595534418
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 595534413}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 42d1fd880f1efa640a93cf825febda9a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _boostSpawner: {fileID: 595534415}
+  _ballController: {fileID: 1098827141}
+  _boostsStats: {fileID: 595534414}
+  _ballMovementHandler: {fileID: 1098827140}
+  _rightPlatform: {fileID: 822449528}
+  _leftPlatform: {fileID: 115864339}
+  _rightSlider: {fileID: 2070646479}
+  _leftSlider: {fileID: 1333278395}
+  _ball: {fileID: 1098827134}
+  _ballRigidbody: {fileID: 1098827139}
 --- !u!1 &672781463
 GameObject:
   m_ObjectHideFlags: 0
@@ -3244,7 +3267,7 @@ MonoBehaviour:
   _boardControllers:
   - {fileID: 115864343}
   - {fileID: 822449532}
-  _boostManager: {fileID: 0}
+  _boostManager: {fileID: 595534418}
 --- !u!114 &1075913839
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3553,7 +3576,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 0.1
+  m_Volume: 0.2
   m_Pitch: 1
   Loop: 0
   Mute: 0
