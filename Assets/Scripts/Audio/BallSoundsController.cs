@@ -25,12 +25,6 @@ public class BallSoundsController : MonoBehaviour
             case "Walls and boards":
                 PlaySound(wallHitSound);
                 break;
-            case "Goal zone":
-                PlaySound(goalSound);
-                break;
-            case "Boost":
-                PlaySound(boostPickupSound);
-                break;
             default:
                 break;
         }
@@ -43,6 +37,9 @@ public class BallSoundsController : MonoBehaviour
 
         switch (layerName)
         {
+            case "Goal zone":
+                PlaySound(goalSound);
+                break;
             case "Boost":
                 PlaySound(boostPickupSound);
                 break;
