@@ -25,6 +25,18 @@ public class BallSoundsController : MonoBehaviour
             case "Walls and boards":
                 PlaySound(wallHitSound);
                 break;
+            default:
+                break;
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        int collisionLayer = collision.gameObject.layer;
+        string layerName = LayerMask.LayerToName(collisionLayer);
+
+        switch (layerName)
+        {
             case "Goal zone":
                 PlaySound(goalSound);
                 break;
